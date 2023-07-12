@@ -14,37 +14,48 @@ namespace InvoiceGenerator
     public partial class Index : Form
     {
 
+        FileManager fm;
+
         public Index()
         {
             InitializeComponent();
-            VerifyTemFileFolder();
+            Init();
         }
 
-        private void VerifyTemFileFolder()
+        private void Init()
         {
-            string initialPath = $"{Application.StartupPath}tempFiles";
-            Console.WriteLine($"initialPath: {initialPath}");
-
-            if (!Directory.Exists(initialPath))
-            {
-                Directory.CreateDirectory(initialPath);
-            }
+            fm = new FileManager();
         }
+
+
 
         private void Index_FormClosed(object sender, FormClosedEventArgs e)
         {
+            fm.DeleteFilesInFolder();
             Environment.Exit(0);
         }
+
 
         private void btnExcelFileSelector_Click(object sender, EventArgs e)
         {
             txtExcelFile.Text = "";
+            fm.DeleteTempFile();
 
             if (openFileDialogExcel.ShowDialog() == DialogResult.OK)
             {
-                string filePath = openFileDialogExcel.FileName;
-                txtExcelFile.Text = openFileDialogExcel.SafeFileName;
+
+                if (fm.MoveFileToTempFolder(openFileDialogExcel.FileName))
+                {
+                    txtExcelFile.Text = openFileDialogExcel.SafeFileName;
+                }
+                else
+                {
+                    MessageBox.Show("Lo sentimos, pero hubo un error al intentar copiar el archivo seleccionado.", "Error al copiar archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+
+            btnExcelFileSelector.Text = txtExcelFile.Text.Length > 0 ? "Cambiar archivo" : "Seleccione archivo";
+
         }
     }
 }

@@ -9,11 +9,17 @@ namespace InvoiceGenerator
     internal class FileManager
     {
 
-        private string initialPath = $"{Application.StartupPath}tempFiles";
+        private readonly string initialPath = $"{Application.StartupPath}tempFiles";
+        private string finalFilePath = "";
 
         public FileManager()
         {
             VerifyFilesFolder();
+        }
+
+        public string GetFilePath()
+        {
+            return finalFilePath;
         }
 
         private void VerifyFilesFolder()
@@ -26,6 +32,8 @@ namespace InvoiceGenerator
 
         public void DeleteFilesInFolder()
         {
+            finalFilePath = "";
+
             System.IO.DirectoryInfo di = new DirectoryInfo(initialPath);
             foreach (FileInfo file in di.EnumerateFiles())
             {
@@ -37,7 +45,12 @@ namespace InvoiceGenerator
             }
         }
 
-        public Boolean MoveFileToTempFolder(string filePath)
+        /// <summary>
+        /// Copy the file passed and return if the copy was success or not
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public bool MoveFileToTempFolder(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -51,9 +64,22 @@ namespace InvoiceGenerator
                 return false;
             }
 
-            File.Copy(filePath, $"{initialPath}\\{Guid.NewGuid().ToString()}{extension}", true);
+            finalFilePath = $"{initialPath}\\{Guid.NewGuid().ToString()}{extension}";
+
+            File.Copy(filePath, finalFilePath, true);
 
             return true;
+        }
+
+        public void DeleteTempFile()
+        {
+            if (!File.Exists(finalFilePath))
+            {
+                return;
+            }
+
+            File.Delete(finalFilePath);
+            finalFilePath = "";
         }
     }
 }
