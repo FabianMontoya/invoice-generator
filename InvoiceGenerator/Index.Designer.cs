@@ -33,6 +33,10 @@
             btnExcelFileSelector = new Button();
             label1 = new Label();
             openFileDialogExcel = new OpenFileDialog();
+            cbWorkSheets = new ComboBox();
+            label2 = new Label();
+            groupBox1 = new GroupBox();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // button1
@@ -78,11 +82,42 @@
             openFileDialogExcel.Filter = "Excel Files|*.xls;*.xlsx;";
             openFileDialogExcel.Title = "Seleccione archivo Excel";
             // 
+            // cbWorkSheets
+            // 
+            cbWorkSheets.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbWorkSheets.FormattingEnabled = true;
+            cbWorkSheets.Location = new Point(6, 42);
+            cbWorkSheets.Name = "cbWorkSheets";
+            cbWorkSheets.Size = new Size(158, 23);
+            cbWorkSheets.TabIndex = 4;
+            cbWorkSheets.SelectedIndexChanged += cbWorkSheets_SelectedIndexChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 19);
+            label2.Name = "label2";
+            label2.Size = new Size(161, 15);
+            label2.TabIndex = 5;
+            label2.Text = "Indique la hoja con los datos:";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(cbWorkSheets);
+            groupBox1.Location = new Point(21, 133);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(468, 100);
+            groupBox1.TabIndex = 6;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "groupBox1";
+            // 
             // Index
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(807, 361);
+            Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(btnExcelFileSelector);
             Controls.Add(txtExcelFile);
@@ -92,6 +127,8 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Index";
             FormClosed += Index_FormClosed;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -103,5 +140,8 @@
         private Button btnExcelFileSelector;
         private Label label1;
         private OpenFileDialog openFileDialogExcel;
+        private ComboBox cbWorkSheets;
+        private Label label2;
+        private GroupBox groupBox1;
     }
 }
