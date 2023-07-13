@@ -32,10 +32,14 @@
             txtExcelFile = new TextBox();
             btnExcelFileSelector = new Button();
             label1 = new Label();
-            openFileDialogExcel = new OpenFileDialog();
+            openFileDialog = new OpenFileDialog();
             cbWorkSheets = new ComboBox();
             label2 = new Label();
             groupBox1 = new GroupBox();
+            cbColumnsHeaders = new ComboBox();
+            label3 = new Label();
+            btnDocxFileSelector = new Button();
+            txtDocxFile = new TextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,15 +76,13 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 69);
             label1.Name = "label1";
-            label1.Size = new Size(209, 15);
+            label1.Size = new Size(243, 15);
             label1.TabIndex = 3;
-            label1.Text = "Seleccione archivo excel con registros:";
+            label1.Text = "Seleccione archivo excel con registros (.xlsx):";
             // 
-            // openFileDialogExcel
+            // openFileDialog
             // 
-            openFileDialogExcel.FileName = "openFileDialogExcel";
-            openFileDialogExcel.Filter = "Excel Files|*.xls;*.xlsx;";
-            openFileDialogExcel.Title = "Seleccione archivo Excel";
+            openFileDialog.Title = "Seleccione archivo Excel";
             // 
             // cbWorkSheets
             // 
@@ -103,6 +105,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(cbColumnsHeaders);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(cbWorkSheets);
             groupBox1.Location = new Point(21, 133);
@@ -112,11 +115,51 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
             // 
+            // cbColumnsHeaders
+            // 
+            cbColumnsHeaders.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbColumnsHeaders.FormattingEnabled = true;
+            cbColumnsHeaders.Location = new Point(170, 42);
+            cbColumnsHeaders.Name = "cbColumnsHeaders";
+            cbColumnsHeaders.Size = new Size(158, 23);
+            cbColumnsHeaders.TabIndex = 6;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(320, 70);
+            label3.Name = "label3";
+            label3.Size = new Size(219, 15);
+            label3.TabIndex = 9;
+            label3.Text = "Seleccione la plantilla de factura (.docx):";
+            // 
+            // btnDocxFileSelector
+            // 
+            btnDocxFileSelector.Cursor = Cursors.Hand;
+            btnDocxFileSelector.Location = new Point(485, 93);
+            btnDocxFileSelector.Name = "btnDocxFileSelector";
+            btnDocxFileSelector.Size = new Size(128, 23);
+            btnDocxFileSelector.TabIndex = 8;
+            btnDocxFileSelector.Text = "Seleccione archivo";
+            btnDocxFileSelector.UseVisualStyleBackColor = true;
+            btnDocxFileSelector.Click += btnDocxFileSelector_Click;
+            // 
+            // txtDocxFile
+            // 
+            txtDocxFile.Location = new Point(321, 94);
+            txtDocxFile.Name = "txtDocxFile";
+            txtDocxFile.ReadOnly = true;
+            txtDocxFile.Size = new Size(158, 23);
+            txtDocxFile.TabIndex = 7;
+            // 
             // Index
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(807, 361);
+            Controls.Add(label3);
+            Controls.Add(btnDocxFileSelector);
+            Controls.Add(txtDocxFile);
             Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(btnExcelFileSelector);
@@ -139,9 +182,13 @@
         private TextBox txtExcelFile;
         private Button btnExcelFileSelector;
         private Label label1;
-        private OpenFileDialog openFileDialogExcel;
+        private OpenFileDialog openFileDialog;
         private ComboBox cbWorkSheets;
         private Label label2;
         private GroupBox groupBox1;
+        private ComboBox cbColumnsHeaders;
+        private Label label3;
+        private Button btnDocxFileSelector;
+        private TextBox txtDocxFile;
     }
 }

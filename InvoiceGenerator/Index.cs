@@ -16,7 +16,8 @@ namespace InvoiceGenerator
     public partial class Index : Form
     {
 
-        FileManager fm;
+        FileManager fmExcel;
+        FileManager fmDocx;
 
         public Index()
         {
@@ -26,14 +27,15 @@ namespace InvoiceGenerator
 
         private void Init()
         {
-            fm = new FileManager();
+            fmExcel = new FileManager();
+            fmDocx = new FileManager();
         }
 
 
 
         private void Index_FormClosed(object sender, FormClosedEventArgs e)
         {
-            fm.DeleteFilesInFolder();
+            fmExcel.DeleteFilesInFolder();
             Environment.Exit(0);
         }
 
@@ -41,13 +43,13 @@ namespace InvoiceGenerator
         private void btnExcelFileSelector_Click(object sender, EventArgs e)
         {
             ResetData();
-
-            if (openFileDialogExcel.ShowDialog() == DialogResult.OK)
+            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
 
-                if (fm.MoveFileToTempFolder(openFileDialogExcel.FileName))
+                if (fmExcel.MoveFileToTempFolder(openFileDialog.FileName))
                 {
-                    txtExcelFile.Text = openFileDialogExcel.SafeFileName;
+                    txtExcelFile.Text = openFileDialog.SafeFileName;
                     ProcessLoadedExcel();
                 }
                 else
@@ -62,16 +64,18 @@ namespace InvoiceGenerator
         private void ResetData()
         {
             txtExcelFile.Text = "";
-            fm.DeleteTempFile();
+            fmExcel.DeleteTempFile();
             cbWorkSheets.Items.Clear();
             cbWorkSheets.SelectedIndex = -1;
+            cbColumnsHeaders.Items.Clear();
+            cbColumnsHeaders.SelectedIndex = -1;
         }
 
         XLWorkbook global_wb;
 
         private void ProcessLoadedExcel()
         {
-            global_wb = new XLWorkbook(fm.GetFilePath());
+            global_wb = new XLWorkbook(fmExcel.GetFilePath());
 
             var workheets = global_wb.Worksheets;
 
@@ -99,18 +103,36 @@ namespace InvoiceGenerator
             // Look for the first row used
             var firstRowUsed = wsData.FirstRowUsed();
 
+            if (firstRowUsed == null)
+            {
+                MessageBox.Show($"Lo sentimos, la hoja seleccionada [{cbWorkSheets.SelectedItem}] no tiene datos para procesar.\nFavor validar o intenta seleccionar otra hoja del Excel.", "Hoja sin datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var headers = firstRowUsed.CellsUsed();
 
+            if (headers == null)
+            {
+                MessageBox.Show($"Lo sentimos, no se logró identificar los headers de la hoja seleccionada.\nFavor validar o intenta seleccionar otra hoja del Excel.", "Hoja sin cabeceras", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             List<HeaderObject> wsHeaders = new List<HeaderObject>();
 
             foreach (var col in headers)
             {
-                if (col.Address != null)
+                var cellId = col.Address.ToString();
+                if (cellId != null)
                 {
-                    var headerName = col.GetString();
-                    var cellId = col.Address.ToString();
-                    wsHeaders.Add(new HeaderObject(cellId, headerName));
+                    string headerName = col.GetString();
+                    var headerObject = new HeaderObject(cellId, headerName);
+                    wsHeaders.Add(headerObject);
+
+                    var cbItem = new ComboboxItem();
+                    cbItem.Text = headerName;
+                    cbItem.Value = headerObject;
+
+                    cbColumnsHeaders.Items.Add(cbItem);
                 }
             }
 
@@ -118,10 +140,44 @@ namespace InvoiceGenerator
 
         private void cbWorkSheets_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cbColumnsHeaders.Items.Clear();
+            cbColumnsHeaders.SelectedIndex = -1;
+
             if (cbWorkSheets.SelectedIndex > -1)
             {
                 GetColumnsHeadersFromWorkSheet(cbWorkSheets.SelectedIndex + 1);
             }
+        }
+
+        private void btnDocxFileSelector_Click(object sender, EventArgs e)
+        {
+            fmDocx.DeleteTempFile();
+
+            openFileDialog.Filter = "Word Files|*.doc;*.docx;";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                if (fmDocx.MoveFileToTempFolder(openFileDialog.FileName))
+                {
+                    txtDocxFile.Text = openFileDialog.SafeFileName;
+                }
+                else
+                {
+                    MessageBox.Show("Lo sentimos, pero hubo un error al intentar copiar el archivo seleccionado.", "Error al copiar archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+    }
+
+
+    public class ComboboxItem
+    {
+        public string Text { get; set; }
+        public object Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 
