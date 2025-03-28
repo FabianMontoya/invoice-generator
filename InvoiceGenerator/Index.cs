@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Text = DocumentFormat.OpenXml.Spreadsheet.Text;
 
 namespace InvoiceGenerator
 {
@@ -160,6 +162,7 @@ namespace InvoiceGenerator
                 if (fmDocx.MoveFileToTempFolder(openFileDialog.FileName))
                 {
                     txtDocxFile.Text = openFileDialog.SafeFileName;
+                    ReadDocumentLoaded();
                 }
                 else
                 {
@@ -167,6 +170,55 @@ namespace InvoiceGenerator
                 }
             }
         }
+
+        private void ReadDocumentLoaded()
+        {
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(fmDocx.GetFilePath(), true))
+            {
+                if (doc.MainDocumentPart == null)
+                {
+                    return;
+                }
+
+                var body = doc.MainDocumentPart.Document.Body;
+
+                foreach (var textElement in body.Descendants<Text>())
+                {
+                    string text = textElement.Text;
+                    var placeholders = GetPlaceholders(text);
+
+                    foreach (var placeholder in placeholders)
+                    {
+                        string searchText = "{{" + placeholder + "}}";
+                        // string replacementText = GetReplacementValue(placeholder); // Implementa esta función para obtener los valores de reemplazo
+
+                        // text = text.Replace(searchText, replacementText);
+                    }
+
+                    textElement.Text = text;
+                }
+            }
+        }
+
+        private string[] GetPlaceholders(string text)
+        {
+            var placeholders = text
+                .Split(new[] { "{{", "}}" }, StringSplitOptions.RemoveEmptyEntries)
+                .Where((_, index) => index % 2 != 0) // Obtiene solo los elementos entre las delimitaciones
+                .ToArray();
+
+            return placeholders;
+        }
+
+        private string GetReplacementValue(string placeholder)
+        {
+            // Implementa aquí la lógica para obtener los valores de reemplazo basados en el placeholder
+            // Por ejemplo, puedes usar un diccionario para asociar placeholders con valores reales.
+            // Retorna el valor de reemplazo correspondiente.
+
+            return "";
+        }
+
     }
 
 

@@ -40,12 +40,18 @@
             label3 = new Label();
             btnDocxFileSelector = new Button();
             txtDocxFile = new TextBox();
+            groupBox2 = new GroupBox();
+            groupBox3 = new GroupBox();
+            label4 = new Label();
+            cbDocumentFields = new ComboBox();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(363, 257);
+            button1.Location = new Point(342, 308);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 0;
@@ -54,7 +60,7 @@
             // 
             // txtExcelFile
             // 
-            txtExcelFile.Location = new Point(13, 93);
+            txtExcelFile.Location = new Point(10, 59);
             txtExcelFile.Name = "txtExcelFile";
             txtExcelFile.ReadOnly = true;
             txtExcelFile.Size = new Size(158, 23);
@@ -63,7 +69,7 @@
             // btnExcelFileSelector
             // 
             btnExcelFileSelector.Cursor = Cursors.Hand;
-            btnExcelFileSelector.Location = new Point(177, 92);
+            btnExcelFileSelector.Location = new Point(174, 58);
             btnExcelFileSelector.Name = "btnExcelFileSelector";
             btnExcelFileSelector.Size = new Size(128, 23);
             btnExcelFileSelector.TabIndex = 2;
@@ -74,7 +80,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 69);
+            label1.Location = new Point(9, 35);
             label1.Name = "label1";
             label1.Size = new Size(243, 15);
             label1.TabIndex = 3;
@@ -88,7 +94,7 @@
             // 
             cbWorkSheets.DropDownStyle = ComboBoxStyle.DropDownList;
             cbWorkSheets.FormattingEnabled = true;
-            cbWorkSheets.Location = new Point(6, 42);
+            cbWorkSheets.Location = new Point(9, 44);
             cbWorkSheets.Name = "cbWorkSheets";
             cbWorkSheets.Size = new Size(158, 23);
             cbWorkSheets.TabIndex = 4;
@@ -97,7 +103,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 19);
+            label2.Location = new Point(9, 21);
             label2.Name = "label2";
             label2.Size = new Size(161, 15);
             label2.TabIndex = 5;
@@ -108,18 +114,18 @@
             groupBox1.Controls.Add(cbColumnsHeaders);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(cbWorkSheets);
-            groupBox1.Location = new Point(21, 133);
+            groupBox1.Location = new Point(13, 117);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(468, 100);
+            groupBox1.Size = new Size(366, 100);
             groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            groupBox1.Text = "Datos Excel";
             // 
             // cbColumnsHeaders
             // 
             cbColumnsHeaders.DropDownStyle = ComboBoxStyle.DropDownList;
             cbColumnsHeaders.FormattingEnabled = true;
-            cbColumnsHeaders.Location = new Point(170, 42);
+            cbColumnsHeaders.Location = new Point(173, 44);
             cbColumnsHeaders.Name = "cbColumnsHeaders";
             cbColumnsHeaders.Size = new Size(158, 23);
             cbColumnsHeaders.TabIndex = 6;
@@ -127,7 +133,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(320, 70);
+            label3.Location = new Point(381, 35);
             label3.Name = "label3";
             label3.Size = new Size(219, 15);
             label3.TabIndex = 9;
@@ -136,7 +142,7 @@
             // btnDocxFileSelector
             // 
             btnDocxFileSelector.Cursor = Cursors.Hand;
-            btnDocxFileSelector.Location = new Point(485, 93);
+            btnDocxFileSelector.Location = new Point(546, 58);
             btnDocxFileSelector.Name = "btnDocxFileSelector";
             btnDocxFileSelector.Size = new Size(128, 23);
             btnDocxFileSelector.TabIndex = 8;
@@ -146,24 +152,64 @@
             // 
             // txtDocxFile
             // 
-            txtDocxFile.Location = new Point(321, 94);
+            txtDocxFile.Location = new Point(382, 59);
             txtDocxFile.Name = "txtDocxFile";
             txtDocxFile.ReadOnly = true;
             txtDocxFile.Size = new Size(158, 23);
             txtDocxFile.TabIndex = 7;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(label3);
+            groupBox2.Controls.Add(txtDocxFile);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Controls.Add(btnExcelFileSelector);
+            groupBox2.Controls.Add(btnDocxFileSelector);
+            groupBox2.Controls.Add(txtExcelFile);
+            groupBox2.Location = new Point(13, 1);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(720, 110);
+            groupBox2.TabIndex = 10;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Archivos";
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(label4);
+            groupBox3.Controls.Add(cbDocumentFields);
+            groupBox3.Location = new Point(385, 117);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(348, 100);
+            groupBox3.TabIndex = 7;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Datos Documento";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(9, 19);
+            label4.Name = "label4";
+            label4.Size = new Size(161, 15);
+            label4.TabIndex = 5;
+            label4.Text = "Indique la hoja con los datos:";
+            // 
+            // cbDocumentFields
+            // 
+            cbDocumentFields.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbDocumentFields.FormattingEnabled = true;
+            cbDocumentFields.Location = new Point(9, 42);
+            cbDocumentFields.Name = "cbDocumentFields";
+            cbDocumentFields.Size = new Size(190, 23);
+            cbDocumentFields.TabIndex = 4;
+            // 
             // Index
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(807, 361);
-            Controls.Add(label3);
-            Controls.Add(btnDocxFileSelector);
-            Controls.Add(txtDocxFile);
+            ClientSize = new Size(753, 361);
+            Controls.Add(groupBox3);
+            Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Controls.Add(label1);
-            Controls.Add(btnExcelFileSelector);
-            Controls.Add(txtExcelFile);
             Controls.Add(button1);
             MaximizeBox = false;
             Name = "Index";
@@ -172,8 +218,11 @@
             FormClosed += Index_FormClosed;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -190,5 +239,10 @@
         private Label label3;
         private Button btnDocxFileSelector;
         private TextBox txtDocxFile;
+        private GroupBox groupBox2;
+        private GroupBox groupBox3;
+        private ComboBox comboBox1;
+        private Label label4;
+        private ComboBox cbDocumentFields;
     }
 }
